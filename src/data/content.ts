@@ -41,35 +41,33 @@ export const navStructure = [
 ]
 
 export const features = [
-  { num: '01', acc: 'amber',  tag: 'Memory',   name: 'Compounding Memory',   path: '/concepts/second-brain',
-    desc: 'Every approval deepens what CURA understands about your life. The longer you use it, the smarter it gets — without sending a single byte to a server.' },
+  { num: '01', acc: 'amber',  tag: 'Memory',   name: 'Compounding memory',   path: '/concepts/second-brain',
+    desc: 'Every confirmed item and auto-captured draft deepens what CURA understands about your life. The longer you use it, the smarter it gets.' },
   { num: '02', acc: 'amber',  tag: 'AI',       name: 'CURA AI',              path: '/features/ai-chat',
-    desc: 'Ask anything. Tell it what to do. Full conversational control over contacts, tasks, finance, calendar, emails, and the wiki — with consent cards on every write.' },
+    desc: 'Ask anything. Tell it what to do. Read queries hit the live database; write actions are tiered by consequence — auto-draft, glance-confirm, or explicit confirm.' },
   { num: '03', acc: 'purple', tag: 'CRM',      name: 'Relationship CRM',     path: '/features/contacts',
-    desc: 'Contacts as living records — interaction history, open commitments, relationship context. Not just a name and an email address.' },
-  { num: '04', acc: 'green',  tag: 'Tasks',    name: 'Intelligent Tasks',    path: '/features/tasks',
-    desc: 'Cork-board of sticky notes, or a quiet list — your call. CURA watches your patterns and surfaces what you should be working on before you think of it.' },
-  { num: '05', acc: 'teal',   tag: 'Money',    name: 'Finance Visibility',   path: '/features/finance',
-    desc: 'No bill should surprise you. No subscription should be forgotten. CSV statement import, AI-extracted renewals, monthly spend at a glance.' },
-  { num: '06', acc: 'tan',    tag: 'Daily',    name: 'Morning Briefing',     path: '/features/briefing',
-    desc: 'Every morning, a personal newspaper written by AI in CURA\'s voice — warm, dry, occasionally funny. Your tasks, calendar, email, and memory in one page.' },
+    desc: 'Contacts as living records — interaction history, open commitments, relationship context. Always manual; never auto-created from your inbox.' },
+  { num: '04', acc: 'green',  tag: 'Tasks',    name: 'Intelligent tasks',    path: '/features/tasks',
+    desc: 'Cork-board of sticky notes, or a quiet list. AI-extracted tasks auto-write as unreviewed drafts — reviewable with a glance, correctable with one tap.' },
+  { num: '05', acc: 'teal',   tag: 'Money',    name: 'Finance visibility',   path: '/features/finance',
+    desc: 'No bill should surprise you. No subscription should be forgotten. CSV import, AI-extracted renewals, monthly spend at a glance. Finance always requires explicit confirm.' },
+  { num: '06', acc: 'tan',    tag: 'Today',    name: 'Today / Briefing',     path: '/features/briefing',
+    desc: 'The front door. One next action, the day\'s brief, and any inline Tier-2 confirms — all in one place. No tabs to check.' },
   { num: '07', acc: 'copper', tag: 'Privacy',  name: 'Local by default',     path: '/privacy',
-    desc: 'No cloud. No telemetry. No account to create. Your data lives in a SQLite file on your machine and never leaves it, except for the explicit AI API calls you authorize.' },
-  { num: '08', acc: 'ochre',  tag: 'Consent',  name: 'The Consent Gate',     path: '/concepts/consent-gate',
-    desc: 'AI proposes. You decide. Nothing is ever written to your database without your explicit confirmation. Permanently. No "auto-approve" mode. No exceptions.' },
+    desc: 'No cloud sync. No telemetry. No account to create. Data lives in local SQLite. Email goes to Gemini for classification; on-device inference is on the roadmap.' },
 ]
 
 export const manifesto = [
   { num: '01', title: 'Your data is not someone else\'s product.',
-    body: 'CURA runs entirely on your Windows desktop. There is no server that knows you exist. There is no account to delete because there is no account to make.' },
-  { num: '02', title: 'AI should ask permission, not forgiveness.',
-    body: 'Every AI proposal lands in Suggestions and waits for your approval. The consent gate is permanent — there is no setting to turn it off.' },
+    body: 'CURA runs on your Windows desktop. There is no server that knows you exist. There is no account to delete because there is no account to make.' },
+  { num: '02', title: 'Interrupt the user only when the cost of being wrong is meaningful.',
+    body: 'Tier 1 auto-captures. Tier 2 glance-confirms inline. Tier 3 requires explicit approval — finance and destructive actions. The question is not "did the user approve this?" It is "what is the cost of being wrong here?"' },
   { num: '03', title: 'Tools should remember so you don\'t have to.',
     body: 'CURA reads your email, watches your calendar, and quietly builds a second brain of what matters. You manage less of the system, not more.' },
   { num: '04', title: 'Productivity software has lost the plot.',
-    body: 'You shouldn\'t need three apps and a Notion template to remember to call your mum. CURA is one quiet window with eight tools that compound.' },
-  { num: '05', title: 'Local-first isn\'t a feature. It\'s a principle.',
-    body: 'No cloud sync. No mobile app. No web client. We picked the constraint and built around it. Your second brain stays on your machine — full stop.' },
+    body: 'You shouldn\'t need three apps and a Notion template to remember to call your mum. CURA is one quiet window that compounds.' },
+  { num: '05', title: 'Local-first isn\'t a feature. It\'s a constraint.',
+    body: 'No cloud sync. No mobile app. No web client. Data lives in local SQLite. Email goes to Gemini for classification; on-device inference is a deferred roadmap item. The tradeoff is known and accepted.' },
   { num: '06', title: 'Software should feel like an object.',
     body: 'A Filofax-inspired design system — leather sidebar, paper grain, ink type. Two themes called Margin and Daylight. CURA is something you keep on your desktop, not something you tab through.' },
 ]
@@ -77,18 +75,18 @@ export const manifesto = [
 export const howSteps = [
   { num: '1', title: 'Connect Google, once.',
     body: 'OAuth2 with PKCE. Read-only Gmail and Calendar. The token stays on your machine — CURA has no servers to send it to.' },
-  { num: '2', title: 'Approve what matters.',
-    body: 'AI classifies your last 30 days of email and proposes tasks, finance items, and people in the Suggestions tab. You approve, defer, or reject.' },
-  { num: '3', title: 'Read your briefing.',
-    body: 'Every morning, AI writes a newspaper-style summary from your open tasks, upcoming events, important emails, and synthesised wiki memory.' },
+  { num: '2', title: 'Context builds automatically.',
+    body: 'AI classifies your last 30 days of email in batches. Extracted tasks auto-write as unreviewed drafts. Finance items wait for explicit confirm. You review what matters in one low-friction surface.' },
+  { num: '3', title: 'Open Today, not a queue.',
+    body: 'Every morning, one next action and a brief. Inline confirms for anything consequential. No backlog to clear before the app is usable.' },
 ]
 
 export const notGoals = [
-  { name: 'No cloud sync.',         body: 'There is no cloud. There is no sync. Your second brain lives in cura.db and nowhere else.' },
+  { name: 'No cloud sync.',         body: 'There is no cloud. Your data lives in a local SQLite file. Email content goes to Gemini for classification; on-device inference is on the roadmap.' },
   { name: 'No mobile app.',         body: 'Windows desktop only. We picked the constraint to keep the surface honest. A phone build is not on the roadmap.' },
   { name: 'No email writing.',      body: 'CURA is read-only on Gmail. It will not send, reply, or draft. Composing email is your job; remembering it is ours.' },
   { name: 'No auto-discovery.',     body: 'Contacts are never inferred from your inbox. You add the people who matter, by hand, on purpose.' },
-  { name: 'No AI writing to disk.', body: 'AI has no direct path to your database. Every extraction goes through the Suggestions tab and waits for you.' },
+  { name: 'No badge counts.', body: 'No unread counts, no "12 pending" numbers on tabs. A count re-externalises pending decisions into working memory — the exact load CURA exists to remove.' },
   { name: 'No telemetry.',          body: 'CURA does not phone home, measure your sessions, or report errors to anyone. The app you run is the app you run.' },
 ]
 

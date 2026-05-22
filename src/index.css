@@ -1403,9 +1403,11 @@ details.faq-item .faq-body code {
   color: var(--text-2);
   border: 1px solid var(--border);
 }
-.rm-pill.done { background: rgba(106,176,76,0.15); color: #6ab04c; border-color: rgba(106,176,76,0.3); }
-.rm-pill.hold { background: rgba(225,112,85,0.12); color: #e17055; border-color: rgba(225,112,85,0.28); }
-.rm-pill.next { background: var(--accent-soft); color: var(--accent); border-color: color-mix(in srgb, var(--accent) 28%, transparent); }
+.rm-pill.done       { background: rgba(106,176,76,0.15);  color: #6ab04c;  border-color: rgba(106,176,76,0.3); }
+.rm-pill.hold       { background: rgba(225,112,85,0.12);  color: #e17055;  border-color: rgba(225,112,85,0.28); }
+.rm-pill.next       { background: var(--accent-soft);     color: var(--accent); border-color: color-mix(in srgb, var(--accent) 28%, transparent); }
+.rm-pill.unverified { background: rgba(193,122,80,0.14);  color: #C17A50;  border-color: rgba(193,122,80,0.32); }
+.rm-pill.progress   { background: rgba(43,175,160,0.12);  color: #2BAFA0;  border-color: rgba(43,175,160,0.30); }
 
 .rm-list {
   display: grid;

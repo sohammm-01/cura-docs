@@ -75,16 +75,16 @@ function Hero({ go }: { go: (p: string) => void }) {
       </div>
       <h1 className="hero-headline">
         Your second brain.<br />
-        <span className="accent">Local.</span>
+        <span className="accent">On your desktop.</span>
       </h1>
       <p className="hero-tagline">
-        A quiet Windows app that reads your email, watches your calendar, and tells you
-        what matters before you think to ask. Nothing leaves your machine.
+        A Windows app that reads your email, watches your calendar, and tells you
+        what matters — before you think to ask. Built for the way ADHD attention actually works.
       </p>
       <div className="hero-ctas">
-        <a href="#/getting-started" className="btn-primary"
-           onClick={(e) => { e.preventDefault(); go('/getting-started') }}>
-          Get started <span aria-hidden>→</span>
+        <a href="#/pivot" className="btn-primary"
+           onClick={(e) => { e.preventDefault(); go('/pivot') }}>
+          The design story <span aria-hidden>→</span>
         </a>
         <a href="#/concepts/second-brain" className="btn-secondary"
            onClick={(e) => { e.preventDefault(); go('/concepts/second-brain') }}>
@@ -92,13 +92,11 @@ function Hero({ go }: { go: (p: string) => void }) {
         </a>
       </div>
       <div className="hero-meta">
-        <span><strong>Windows 11</strong></span>
+        <span><strong>Tauri v2 · React · TypeScript</strong></span>
         <span className="dot" />
-        <span><strong>100% local</strong></span>
+        <span><strong>Rust · SQLite</strong></span>
         <span className="dot" />
-        <span><strong>AI-powered</strong></span>
-        <span className="dot" />
-        <span><strong>Free</strong></span>
+        <span><strong>Gemini AI</strong></span>
       </div>
     </section>
   )
@@ -120,7 +118,7 @@ function FeaturesSection({ go }: { go: (p: string) => void }) {
     <section className="features-section">
       <div className="features-heading">
         <div className="eyebrow">The product</div>
-        <h2>Eight tools.<br />One quiet window.</h2>
+        <h2>What it does.</h2>
       </div>
       <div className="features-list">
         {features.map(f => (
