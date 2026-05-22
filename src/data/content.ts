@@ -1,5 +1,11 @@
 export const navStructure = [
   {
+    text: 'The Build',
+    items: [
+      { text: 'The Design Pivot', path: '/pivot', acc: 'amber' },
+    ],
+  },
+  {
     text: 'Introduction',
     items: [
       { text: 'Getting Started', path: '/getting-started', acc: 'amber' },
@@ -10,29 +16,26 @@ export const navStructure = [
     text: 'Concepts',
     items: [
       { text: 'The Second Brain',  path: '/concepts/second-brain',  acc: 'amber' },
-      { text: 'The Consent Gate',  path: '/concepts/consent-gate',  acc: 'amber' },
       { text: 'Memory Layers',     path: '/concepts/memory-layers', acc: 'amber' },
     ],
   },
   {
     text: 'Features',
     items: [
-      { text: 'CURA AI',            path: '/features/ai-chat',     acc: 'amber' },
-      { text: 'Contacts',           path: '/features/contacts',    acc: 'purple' },
-      { text: 'Tasks',              path: '/features/tasks',       acc: 'green' },
-      { text: 'Finance',            path: '/features/finance',     acc: 'teal' },
-      { text: 'Daily Briefing',     path: '/features/briefing',    acc: 'tan' },
-      { text: 'Email Intelligence', path: '/features/email',       acc: 'copper' },
-      { text: 'Calendar',           path: '/features/calendar',    acc: 'rose' },
-      { text: 'Suggestions',        path: '/features/suggestions', acc: 'ochre' },
+      { text: 'CURA AI',            path: '/features/ai-chat',  acc: 'amber' },
+      { text: 'Contacts',           path: '/features/contacts', acc: 'purple' },
+      { text: 'Tasks',              path: '/features/tasks',    acc: 'green' },
+      { text: 'Finance',            path: '/features/finance',  acc: 'teal' },
+      { text: 'Today / Briefing',   path: '/features/briefing', acc: 'tan' },
+      { text: 'Email Intelligence', path: '/features/email',    acc: 'copper' },
+      { text: 'Calendar',           path: '/features/calendar', acc: 'rose' },
     ],
   },
   {
     text: 'Reference',
     items: [
-      { text: 'Privacy & Data', path: '/privacy',  acc: 'amber' },
-      { text: 'Roadmap',        path: '/roadmap',  acc: 'amber' },
-      { text: 'FAQ',            path: '/faq',      acc: 'amber' },
+      { text: 'Privacy & Data', path: '/privacy',   acc: 'amber' },
+      { text: 'Build Log',      path: '/roadmap',   acc: 'amber' },
     ],
   },
 ]
@@ -108,20 +111,19 @@ export type DocMeta = {
 }
 
 export const docPages: Record<string, DocMeta> = {
+  '/pivot':                 { crumb: 'The Build',    title: 'The Design Pivot',     kind: 'pivot',           lede: 'CURA started as an eight-tab approve-everything second brain. Here is what was wrong with it, and what replaced it.' },
   '/getting-started':       { crumb: 'Introduction', title: 'Get started',         kind: 'getting-started', lede: 'CURA is a Windows desktop application built with Tauri v2. There is no web app, no mobile version, and no cloud account to create. Everything runs locally on your machine.' },
   '/interface':             { crumb: 'Introduction', title: 'The interface',        kind: 'interface',       lede: 'CURA has a distinctive visual identity — a Filofax-inspired design system with physical texture, earthy tones, and a leather sidebar. Two themes are available.' },
-  '/concepts/second-brain': { crumb: 'Concepts',     title: 'The Second Brain',     kind: 'second-brain',    lede: 'Most productivity tools ask you to maintain them. CURA is built on a different premise — the system should maintain itself from your natural behaviour.' },
-  '/concepts/consent-gate': { crumb: 'Concepts',     title: 'The Consent Gate',     kind: 'consent-gate',    lede: 'CURA\'s most important design principle. Nothing is ever written to your database without your explicit confirmation. Not a task. Not a contact. Not a finance item.' },
-  '/concepts/memory-layers':{ crumb: 'Concepts',     title: 'Memory Layers',        kind: 'placeholder',     lede: 'CURA stores memory in two layers: the raw SQLite database for live data, and a Markdown wiki of synthesised narratives that compound over time.' },
-  '/features/ai-chat':      { crumb: 'Features',     title: 'CURA AI',              kind: 'ai-chat',         lede: 'CURA AI is the primary interface to your second brain. Instead of navigating tabs and dashboards, you ask CURA what you need to know — or tell it what to do.' },
-  '/features/contacts':     { crumb: 'Features',     title: 'Contacts',             kind: 'placeholder',     lede: 'A manual relationship CRM. Contacts in CURA are living records — they accumulate interaction history, open commitments, and relationship notes.' },
-  '/features/tasks':        { crumb: 'Features',     title: 'Tasks',                kind: 'placeholder',     lede: 'Cork-board of colour-coded sticky notes, or a clean focused list — your call. Tasks can be created manually, proposed by AI, or added via CURA AI chat.' },
-  '/features/finance':      { crumb: 'Features',     title: 'Finance',              kind: 'placeholder',     lede: 'Bills, subscriptions, and bank statement transactions in one place. AI extracts renewals from your inbox; you approve them; nothing surprises you.' },
-  '/features/briefing':     { crumb: 'Features',     title: 'Morning Briefing',     kind: 'placeholder',     lede: 'Every morning, a personal newspaper written by AI from your open tasks, upcoming events, important emails, and wiki memory.' },
-  '/features/email':        { crumb: 'Features',     title: 'Email Intelligence',   kind: 'placeholder',     lede: 'CURA reads your Gmail every 30 minutes, classifies it locally, and extracts tasks, finance signals, and people mentions — nothing writes without consent.' },
-  '/features/calendar':     { crumb: 'Features',     title: 'Calendar',             kind: 'placeholder',     lede: 'Your Google Calendar surfaced in CURA\'s briefing and in chat answers. Upcoming events, recurring commitments, birthdays.' },
-  '/features/suggestions':  { crumb: 'Features',     title: 'Suggestions',          kind: 'placeholder',     lede: 'The Suggestions tab is the consent gate in action — a stack of AI-proposed cards waiting for your approval, deferral, or dismissal.' },
-  '/privacy':               { crumb: 'Reference',    title: 'Privacy & Data',       kind: 'privacy',         lede: 'CURA is built on a single, non-negotiable principle: your data stays on your machine. No cloud sync, no external database, no telemetry.' },
+  '/concepts/second-brain': { crumb: 'Concepts',     title: 'How memory works',    kind: 'second-brain',    lede: 'CURA builds memory from signals you generate anyway — email, calendar, approvals. It compounds over time without you having to maintain it.' },
+  '/concepts/memory-layers':{ crumb: 'Concepts',     title: 'Memory Layers',       kind: 'memory-layers',   lede: 'CURA stores data in two layers: a live SQLite database for operational data, and a wiki projected on demand from confirmed table state.' },
+  '/features/ai-chat':      { crumb: 'Features',     title: 'CURA AI',             kind: 'ai-chat',         lede: 'Ask anything across your contacts, tasks, finance, calendar, emails, and memory. Write actions are tiered — auto-draft, glance-confirm, or explicit confirm depending on consequence.' },
+  '/features/contacts':     { crumb: 'Features',     title: 'Contacts',            kind: 'placeholder',     lede: 'A manual relationship CRM. Contacts are never auto-created — adding a contact is a deliberate act, because a wrong contact silently pollutes relationship data.' },
+  '/features/tasks':        { crumb: 'Features',     title: 'Tasks',               kind: 'placeholder',     lede: 'Cork-board of colour-coded sticky notes, or a clean focused list. AI-extracted tasks auto-write as unreviewed drafts — reviewable with a glance, correctable with one tap.' },
+  '/features/finance':      { crumb: 'Features',     title: 'Finance',             kind: 'placeholder',     lede: 'Bills, subscriptions, and bank statement transactions in one place. Finance items always require explicit confirmation — they are consequential enough to warrant it.' },
+  '/features/briefing':     { crumb: 'Features',     title: 'Today / Briefing',    kind: 'placeholder',     lede: 'The front door. Leads with a single next action, the day\'s brief, and any pending Tier-2 confirms — all in one place. No tabs to check.' },
+  '/features/email':        { crumb: 'Features',     title: 'Email Intelligence',  kind: 'placeholder',     lede: 'CURA reads Gmail every 30 minutes, classifies in batches of 20–50, and extracts tasks and finance signals from important categories only.' },
+  '/features/calendar':     { crumb: 'Features',     title: 'Calendar',            kind: 'placeholder',     lede: 'Google Calendar events feed into the Today surface and chat. Calendar is a data source, not a destination tab.' },
+  '/privacy':               { crumb: 'Reference',    title: 'Privacy & Data',      kind: 'privacy',         lede: 'All data is stored locally in SQLite. Email is sent to Gemini for classification; on-device inference is a deferred roadmap item. The tradeoff is known and accepted.' },
 }
 
 export const flatNav = navStructure.flatMap(g => g.items)

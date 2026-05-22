@@ -216,6 +216,159 @@ function InterfaceBody() {
   )
 }
 
+function MemoryLayersBody() {
+  return (
+    <>
+      <h2 id="two-layers">The two layers</h2>
+      <table>
+        <thead><tr><th>Layer</th><th>Location</th><th>Purpose</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>Operational store</strong></td>
+            <td><code>SQLite (cura.db)</code></td>
+            <td>Live data — emails, tasks, contacts, finance, calendar events</td>
+          </tr>
+          <tr>
+            <td><strong>Wiki projection</strong></td>
+            <td><code>%AppData%\CURA\memory\wiki\</code></td>
+            <td>Markdown pages regenerated on demand from confirmed table state</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2 id="operational-store">Layer 1 — SQLite operational store</h2>
+      <p>
+        The ground truth of your data. Every confirmed task, contact, finance item, and synced email
+        lives here as a structured row. CURA AI queries this store directly — fast, precise, always current.
+      </p>
+      <table>
+        <thead><tr><th>Table</th><th>What's stored</th></tr></thead>
+        <tbody>
+          {[
+            ['emails',         'All fetched Gmail messages — ID, sender, subject, body, classification'],
+            ['tasks',          'Tasks with due times, recurrence, and auto/reviewed flag'],
+            ['finance_items',  'Confirmed bills and renewals — name, amount, due date, status'],
+            ['subscriptions',  'Manually-tracked recurring subscriptions'],
+            ['transactions',   'CSV-imported bank statement rows'],
+            ['people',         'Manual contacts with relationship notes'],
+            ['calendar_events','Google Calendar events (30-day window)'],
+          ].map(([t, d]) => (
+            <tr key={t}><td><code>{t}</code></td><td>{d}</td></tr>
+          ))}
+        </tbody>
+      </table>
+
+      <h2 id="wiki-projection">Layer 2 — wiki projection</h2>
+      <p>
+        The wiki is not written by AI. <code>commitments/overview.md</code> and{' '}
+        <code>finance/overview.md</code> are regenerated on demand from confirmed SQLite rows —
+        deterministically, with no narrative Gemini adds independently. If a claim exists in the wiki
+        but not in a confirmed table, that is a bug.
+      </p>
+      <p>
+        <code>sources/</code> pages are extractive only — email metadata and snippets, never
+        interpretation. <code>patterns/</code> generation is disabled pending a backing table whose
+        rows get Tier-2 confirmed first.
+      </p>
+      <div className="callout info">
+        <div>
+          <strong>Why projection instead of synthesis?</strong> Gemini writing independent narrative
+          claims creates a parallel memory nobody confirmed. A wrong claim compounds silently across
+          briefings, chat, and future extractions. Projection means the wiki can only say what the
+          confirmed tables already say.
+        </div>
+      </div>
+
+      <h2 id="where-data-lives">Where data lives</h2>
+      <pre>{`%AppData%\\CURA\\
+├── cura.db              ← SQLite operational store
+└── memory\\
+    ├── wiki\\
+    │   ├── commitments\\  ← projected from tasks table
+    │   ├── finance\\      ← projected from finance_items table
+    │   └── sources\\      ← extractive email metadata only
+    ├── briefings\\        ← cached daily briefings
+    └── raw\\
+        └── emails\\       ← write-once email archive (immutable)`}</pre>
+    </>
+  )
+}
+
+function PivotBody() {
+  return (
+    <>
+      <h2 id="v1">Version 1 — what I built first</h2>
+      <p>
+        CURA started as an eight-tab second brain: AI classifies incoming email and surfaces proposed
+        tasks, finance items, and contacts as a Suggestions queue — nothing touches the database until
+        the user explicitly approves it. The wiki completed the picture: Gemini Pro wrote narrative
+        pages per person, project, and topic that compounded across weeks of email to give the AI
+        richer context for chat and briefings.
+      </p>
+
+      <h2 id="failure-modes">What was wrong</h2>
+
+      <h3 id="blocking-queue">The blocking queue problem</h3>
+      <p>
+        For an ADHD user, a queue you must clear is not a safety net — it is a new open loop. Clearing
+        the Suggestions tab is exactly the low-reward, high-friction task this user abandons. The consent
+        gate, framed as a permanent design principle, was re-externalising the count of pending decisions
+        into working memory — the exact load CURA exists to remove. Storage you must go consult fails this
+        user. The gate that prevents uninvited writes was creating uninvited backlog.
+      </p>
+
+      <h3 id="unauditable-wiki">The un-auditable wiki problem</h3>
+      <p>
+        Gemini writing independent narrative claims into <code>commitments/</code> and <code>finance/</code>{' '}
+        creates a parallel memory nobody confirmed. A wrong claim about a deadline or a financial commitment
+        compounds silently: it shapes briefings, informs chat answers, and influences future extractions.
+        The more context the system accumulated, the less auditable it became.
+      </p>
+
+      <h2 id="v2">The redesign — Phase R</h2>
+      <p>
+        The governing question shifted from <em>did the user approve this?</em> to <em>what is the cost
+        of being wrong here?</em> That produced a tiered capture model:
+      </p>
+      <table>
+        <thead>
+          <tr><th>Tier</th><th>When</th><th>Behaviour</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Tier 1</strong></td>
+            <td>Reversible items — auto-extracted tasks</td>
+            <td>Writes directly as unreviewed drafts; correctable with one tap</td>
+          </tr>
+          <tr>
+            <td><strong>Tier 2</strong></td>
+            <td>Claims about the user's life that compound if wrong</td>
+            <td>Inline glance-confirm on the Today surface — not behind a tab</td>
+          </tr>
+          <tr>
+            <td><strong>Tier 3</strong></td>
+            <td>Finance and destructive actions</td>
+            <td>Explicit confirm. Always.</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        The wiki became a deterministic projection: <code>commitments/</code> and <code>finance/</code>{' '}
+        regenerate on demand from confirmed SQLite rows; Gemini writes nothing narrative to disk. The
+        Suggestions queue was decommissioned, replaced by a Recently Captured surface — category-grouped,
+        no badge, never announced as a backlog. The Today surface (evolved from Briefing) became the front
+        door: one next action, the day's brief, and any inline Tier-2 confirms.
+      </p>
+      <div className="callout">
+        <div>
+          <strong>Status: Phase R refactor complete, runtime validation in progress.</strong>{' '}
+          The architecture is in place; end-to-end testing is ongoing.
+        </div>
+      </div>
+    </>
+  )
+}
+
 function PlaceholderBody({ title }: { title: string }) {
   return (
     <>
@@ -271,12 +424,13 @@ export default function DocPage({ route, go }: { route: string; go: (p: string) 
 
   let body: React.ReactNode
   switch (meta.kind) {
+    case 'pivot':           body = <PivotBody />;           break
     case 'getting-started': body = <GettingStartedBody />; break
     case 'second-brain':    body = <SecondBrainBody />;    break
-    case 'consent-gate':    body = <ConsentGateBody />;    break
     case 'ai-chat':         body = <AiChatBody />;         break
     case 'privacy':         body = <PrivacyBody />;        break
     case 'interface':       body = <InterfaceBody />;      break
+    case 'memory-layers':   body = <MemoryLayersBody />;   break
     default:                body = <PlaceholderBody title={meta.title} />
   }
 
